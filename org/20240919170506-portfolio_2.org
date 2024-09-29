@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       20eff035-9f30-497e-a3ac-dfb62f1bcfe2
+:END:
+#+title: Portfolio 2
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+Biology is hard. Research is also very hard, especially in subjects that you aren't familiar with. A lot of research and knowledge comes down to knowing what the right questions to ask are and where to find the information. However this creates a barrier of entry for any field your not familiar with as its requires you to know that key term that describes exactly what your looking for. It also cascades, to understand A you need to understand B and C and to understand B and C you need to know about D and E and so on. While researching, one of the first things I wanted to get a proper grasp of was what exactly /is/ spatial transcriptomics? The machine learning model I'm developing will become a method for this class of techniques but /why is it important/ and what /exactly/ does it do? My Mum called biology the study of long words because while it can be complex it can also be deceptively simple, simply surrounded in a sea of unpronounceable jargon (Deoxyribonucleic acid anyone?)
+
+To start my research I opened the paper that my work will be based on and searched for where they talked about spatial transcriptomics and then followed the links. This for me personally is one of the best ways to get started as papers usually have multiple citations that lead to more papers with more citations and it allows you to collect a wide net of differing articles until you get low enough to one you understand. However I didn't find the articles incredibly helpful, the best one being [[https://www.nature.com/articles/s41592-020-01033-y#Sec7]] which helped, but frankly reads like 50 quotes strung together, none of which form a cohesive image.
+
+So I simply googled around for a bit and fortunately found this excellent article [[https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-022-01075-1]]. This article single handily saved my +life+ research. It not only provides a solid background that starts off simple enough for me to learn, but also describes *WHY* its important. It also goes in-depth about the current techniques, which is a bit too complicated for me now, but I would like to look more into so I can compare my machine learning techniques to them later.
+
+Right now I'm learning more about the area of my subject and I feel like my research skills have improved, especially when it comes to reading and understanding scholarly articles. Learning to utilise their references has really improved my speed. I'm on track with the plan and should finish up this research in a couple of weeks.

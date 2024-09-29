@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       afe384cf-6a0d-4e7e-be26-aa4bcdd6fc7b
+:END:
+#+title: Neural Networks
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+* Basics
+Neural networks are whats used to power the AI mechanisms of today. They are designed to replicate the neurons and their connections in our brain, hence allowing computers to learn. The main advantage is that we don't have to program the algorithms ourselves.
+* Neuron
+** Perceptron
+The perceptron is a form of artificial neuron. The core idea is simple, the neuron takes in a number of inputs (x_1, x_2, x_3), modifies them according to the weight values (w_1, w_2, w_3) and takes the sum of them. If it is above a threshold then the perceptron on, if not its off. The threshold can be re interpreted as a bais that we subtract from the aforementioned weighted sum. So the output can be seen as 0 if \(wx - b <= 0\) or 1 if \(wx + b > 0\)
+** Sigmoid neuron
+A sigmoid neuron can take in inputs of values between 0 and 1 and has the weighted sum transformed by the sigmoid function defined by \( {1}/{1 + e^{-z}} \). The smoothed out shape of the sigmoid means that a small change in the weights will cause a small change in the output, allowing for us to tune the weights. In the perceptron changing the weight a small amount may either swing the neuron completely (0 to 1) or do nothing
+
+In general, the form of a neuron can be described f(wx + b) where b is a negative bias, w is the weight, x is the input and f is an *activation function* (in this  case a sigmoid)
+* Network
+In general a network consists of an input layer, one or more hidden layers (which is just layers  of neurons that aren't input or output) and an output layer. These multi layer networks are called *multi layer perceptrons*. The networks that are being discussed are called *feed-forward* as the previous layer feeds into the next.
+* Learning
+** Gradient descent
+To teach a model we first must be able to test the model. To do this we create a cost function, in this case C(w,b) = \({1}/{2n}\sum{x}{||y(x)-a||^2}\) where a is the vector of outputs, y is the model, n is the total number of training inputs and x is the input data. We call this the *quadratic* cost function, or the *mean squared error*. The most important thing is that if the algorithm is certain i.e. [0, 0, 0.98, 0.02] then the error is small, but if the algorithm is uncertain [0.3, 0.2, 0.2, 0.3] then the error is large.
+
+We want to minimise this function, ideally to do so we would find the derivative, but the function C has too many parameters, so instead we adjust the weights and finds a small negative change in C and update the parameters. This is more or less an implementation of the hill climbing algorithm, where if we imagine a ball and the function as using only two parameters, the ball is rolling down the hill into a pocket.
+
+As C requires us to work out every single output of the neural network it requires a ton of work. To reduce it we get a /mini-batch/ of input data and work out C from that. Turns out that provided the sample batch is large enough, it will be close enough to C. So to train we use these randomly selected mini batches again and again and once we've exhausted our training input we say we've completed an *epoch* of training and begin a new one
+** Back propagation
+Back propagation is about understanding how changing weights and biases in a network changes the cost function. To work it out we imagine there is a little demon in our network that adds a change \(\Delta Z^{l}_{j}\) to a neurons weighted input. If \( {\delta C}/{\delta z^l_j} \) is close to zero than the demon cannot improve the cost much at all, but if its small than it can has greater influence. Hence we can define the error of a neuron j in layer l as \(\delta ^l_j \equiv \frac{\delta C}{\delta z^l_j}\). We can use this as our measure of error. An equation for the error in the output layer is \( \delta^L_j = \frac{\delta C}{\delta a^L_j} \sigma (z^L_J)\). We can think of \( \delta C / \delta a^L_j \) as being how fast the cost is changing as a function of the jth output activation and \( \sigma (z^L_j) \) as how fast the activation function is changing at z. We can then get an equation for the error in terms of the error in the next layer \( \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma (z^l)\). We can think of this as taking the error from the next layer and propagating it backwards (oh hey that's the name). With a couple more equations we end up with our algorithm.
+1. Input x: set the corresponding activation for the input layer
+2. Feed forward: for each layer compute \(z^l = w^l a^{l-1}+b^l \) and \( a^l = \sigma (z^l)\)
+3. Output error: Get the error of the last layer using formula mentioned above
+4. Back propagate the error: For each previous layer we calculate the \(\delta ^l \)
+5. Get the gradient of the cost function
+** Over fitting
+The problem with models with so many parameters is its very easy to make them fit your training data, but this doesn't necessarily make it a good model as a good model can be used to make predictions for never seen before data. If we do testing we can see that there are instances where the cost function performs better but the test results plateau after a certain epoch. We call this over fitting or over training after epoch x.
+** Vanishing gradient problem
+In general in neural networks the earlier layers will learn slower than the later ones. A simple way to think of this is because of our back propagation the earlier gradients are calculated from the later gradients and hence, are modified less. In general the gradient of the many layers is inherently unstable, making it harder to train large deep neural networks.
+* Resources
+- Nielsen, M.A. (2015). /Neural Networks and Deep Learning/. Determination Press
+

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-29 Sun 23:32 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Neural Networks</title>
+<meta name="author" content="chameko" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="imagine.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Neural Networks</h1>
+<div id="outline-container-org37ef5fd" class="outline-2">
+<h2 id="org37ef5fd">Basics</h2>
+<div class="outline-text-2" id="text-org37ef5fd">
+<p>
+Neural networks are whats used to power the AI mechanisms of today. They are designed to replicate the neurons and their connections in our brain, hence allowing computers to learn. The main advantage is that we don't have to program the algorithms ourselves.
+</p>
+</div>
+</div>
+<div id="outline-container-org40f74a0" class="outline-2">
+<h2 id="org40f74a0">Neuron</h2>
+<div class="outline-text-2" id="text-org40f74a0">
+</div>
+<div id="outline-container-orgb74ca67" class="outline-3">
+<h3 id="orgb74ca67">Perceptron</h3>
+<div class="outline-text-3" id="text-orgb74ca67">
+<p>
+The perceptron is a form of artificial neuron. The core idea is simple, the neuron takes in a number of inputs (x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>), modifies them according to the weight values (w<sub>1</sub>, w<sub>2</sub>, w<sub>3</sub>) and takes the sum of them. If it is above a threshold then the perceptron on, if not its off. The threshold can be re interpreted as a bais that we subtract from the aforementioned weighted sum. So the output can be seen as 0 if \(wx - b <= 0\) or 1 if \(wx + b > 0\)
+</p>
+</div>
+</div>
+<div id="outline-container-org3285d6e" class="outline-3">
+<h3 id="org3285d6e">Sigmoid neuron</h3>
+<div class="outline-text-3" id="text-org3285d6e">
+<p>
+A sigmoid neuron can take in inputs of values between 0 and 1 and has the weighted sum transformed by the sigmoid function defined by \( {1}/{1 + e^{-z}} \). The smoothed out shape of the sigmoid means that a small change in the weights will cause a small change in the output, allowing for us to tune the weights. In the perceptron changing the weight a small amount may either swing the neuron completely (0 to 1) or do nothing
+</p>
+
+<p>
+In general, the form of a neuron can be described f(wx + b) where b is a negative bias, w is the weight, x is the input and f is an <b>activation function</b> (in this  case a sigmoid)
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbc7741c" class="outline-2">
+<h2 id="orgbc7741c">Network</h2>
+<div class="outline-text-2" id="text-orgbc7741c">
+<p>
+In general a network consists of an input layer, one or more hidden layers (which is just layers  of neurons that aren't input or output) and an output layer. These multi layer networks are called <b>multi layer perceptrons</b>. The networks that are being discussed are called <b>feed-forward</b> as the previous layer feeds into the next.
+</p>
+</div>
+</div>
+<div id="outline-container-org6694d24" class="outline-2">
+<h2 id="org6694d24">Learning</h2>
+<div class="outline-text-2" id="text-org6694d24">
+</div>
+<div id="outline-container-org8109d55" class="outline-3">
+<h3 id="org8109d55">Gradient descent</h3>
+<div class="outline-text-3" id="text-org8109d55">
+<p>
+To teach a model we first must be able to test the model. To do this we create a cost function, in this case C(w,b) = \({1}/{2n}\sum{x}{||y(x)-a||^2}\) where a is the vector of outputs, y is the model, n is the total number of training inputs and x is the input data. We call this the <b>quadratic</b> cost function, or the <b>mean squared error</b>. The most important thing is that if the algorithm is certain i.e. [0, 0, 0.98, 0.02] then the error is small, but if the algorithm is uncertain [0.3, 0.2, 0.2, 0.3] then the error is large.
+</p>
+
+<p>
+We want to minimise this function, ideally to do so we would find the derivative, but the function C has too many parameters, so instead we adjust the weights and finds a small negative change in C and update the parameters. This is more or less an implementation of the hill climbing algorithm, where if we imagine a ball and the function as using only two parameters, the ball is rolling down the hill into a pocket.
+</p>
+
+<p>
+As C requires us to work out every single output of the neural network it requires a ton of work. To reduce it we get a <i>mini-batch</i> of input data and work out C from that. Turns out that provided the sample batch is large enough, it will be close enough to C. So to train we use these randomly selected mini batches again and again and once we've exhausted our training input we say we've completed an <b>epoch</b> of training and begin a new one
+</p>
+</div>
+</div>
+<div id="outline-container-org572597d" class="outline-3">
+<h3 id="org572597d">Back propagation</h3>
+<div class="outline-text-3" id="text-org572597d">
+<p>
+Back propagation is about understanding how changing weights and biases in a network changes the cost function. To work it out we imagine there is a little demon in our network that adds a change \(\Delta Z^{l}_{j}\) to a neurons weighted input. If \( {\delta C}/{\delta z^l_j} \) is close to zero than the demon cannot improve the cost much at all, but if its small than it can has greater influence. Hence we can define the error of a neuron j in layer l as \(\delta ^l_j \equiv \frac{\delta C}{\delta z^l_j}\). We can use this as our measure of error. An equation for the error in the output layer is \( \delta^L_j = \frac{\delta C}{\delta a^L_j} \sigma (z^L_J)\). We can think of \( \delta C / \delta a^L_j \) as being how fast the cost is changing as a function of the jth output activation and \( \sigma (z^L_j) \) as how fast the activation function is changing at z. We can then get an equation for the error in terms of the error in the next layer \( \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma (z^l)\). We can think of this as taking the error from the next layer and propagating it backwards (oh hey that's the name). With a couple more equations we end up with our algorithm.
+</p>
+<ol class="org-ol">
+<li>Input x: set the corresponding activation for the input layer</li>
+<li>Feed forward: for each layer compute \(z^l = w^l a^{l-1}+b^l \) and \( a^l = \sigma (z^l)\)</li>
+<li>Output error: Get the error of the last layer using formula mentioned above</li>
+<li>Back propagate the error: For each previous layer we calculate the \(\delta ^l \)</li>
+<li>Get the gradient of the cost function</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org6376e34" class="outline-3">
+<h3 id="org6376e34">Over fitting</h3>
+<div class="outline-text-3" id="text-org6376e34">
+<p>
+The problem with models with so many parameters is its very easy to make them fit your training data, but this doesn't necessarily make it a good model as a good model can be used to make predictions for never seen before data. If we do testing we can see that there are instances where the cost function performs better but the test results plateau after a certain epoch. We call this over fitting or over training after epoch x.
+</p>
+</div>
+</div>
+<div id="outline-container-org2219801" class="outline-3">
+<h3 id="org2219801">Vanishing gradient problem</h3>
+<div class="outline-text-3" id="text-org2219801">
+<p>
+In general in neural networks the earlier layers will learn slower than the later ones. A simple way to think of this is because of our back propagation the earlier gradients are calculated from the later gradients and hence, are modified less. In general the gradient of the many layers is inherently unstable, making it harder to train large deep neural networks.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org1af08b4" class="outline-2">
+<h2 id="org1af08b4">Resources</h2>
+<div class="outline-text-2" id="text-org1af08b4">
+<ul class="org-ul">
+<li>Nielsen, M.A. (2015). <i>Neural Networks and Deep Learning</i>. Determination Press</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: chameko</p>
+<p class="date">Created: 2024-09-29 Sun 23:32</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

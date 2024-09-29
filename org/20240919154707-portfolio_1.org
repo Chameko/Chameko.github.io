@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       4f60e68f-4a31-4966-9cf5-9bc912988101
+:END:
+#+title: Portfolio 1
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+One of the first things my supervisor told me to do was to choose an article to base my project off of. There the article I chose in this case was [[https://www.sciencedirect.com/science/article/pii/S0031320323006647#section-cited-by]], which is about spatial transcriptomics using a graph based exemplar neural network. When choosing projects I wanted to choose a machine learning related project that was in the medical field because I believe machine learning has a high amount of potential in the area.
+
+While AI has become more mainstream, its mostly been technologies such as Chat-GPT, Gemini and other large language models. These tools are useful, but while they're excellent for tech demonstrations and are useful for some tasks I feel like their usage is ultimately limited and I also question what the motive for creating them is. Who _MOST_ benefits from their existence? If I look at it cynically, AI image generation allows me to create any image I may imagine, but was done so because people didn't want to learn the skill to create art or pay an artist for the required time and effort. Of course the innovations and abilities are amazing, but the actual applications feel superfluous.
+
+Machine learning in medicine on the other hand has a real chance to help people in need and is also well within our technical capability. Often diagnostic tools come down to having a specialist recognising a pattern and then making a decision from that data. This is the exact kind of problem machine learning is great at solving. Doctors are not perfect and have a limited amount of time, so the potential speed that machine learning offers in the field could be life saving.
+
+Currently I know very little and as mentioned in my self reflection, struggle with open ended research. To tackle this I'm trying to define clear goals in what I want my research to achieve. I'm relatively confident in my ability to quickly learn the computer science aspects, so I'm spending time to learn the biological terms in the aforementioned paper, specificicaly *WHAT* spatial transcriptomics is and *HOW* it is useful. I also hope that this will help me better define the aim and motivation of my project a little better as it feels a bit nebulous right now.
+
+I've organised to have weekly meetings with my supervisor so I can ask questions and am following the plan I outlined in the project proposal.

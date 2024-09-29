@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       4b84d04b-a978-4d5e-b543-6b75728bda3f
+:END:
+#+title: Spatial Transcriptomics
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+* What is it
+As most human cells share essentially the same DNA, cell function cannot be described using DNA and is instead described by the proteins that the cells produce.
+** mRNA
+mRNA is a molecule that contains the instructions that direct a cell to make a protein. As there is no commercial method to quantify all the proteins that are used in a singular cell we instead take the description of the entire repertoire of mRNA from a single cell. This is called the *transcritptome* and the process is called single cell RNA sequencing.
+** scRNA-seq
+Most single cell RNA sequencing methods require the cell to be released intact and viable from tissues which are then assessed
+*** Negatives
+As the cell has to be removed intact from the tissue this can make some cells very hard to get (such as neurons). It also removes the cell from its neighbours, which may hold helpful information for defining cell and tissue function.
+** Spatial Transcriptomics
+Spatial transcriptomics evolved from the need to study these cells in their tissue. As the spatial information of the cell is preserved by studying the intact tissue it is called /spatial/ trascriptomics.
+
+Spatial transcriptomics aims to count the number of transcipts of a gene at distinct spatial locations in a tissue.
+
+There are currently two predominant techniques, imaging and sequencing where the main trade off between technologies is the efficiency of the technique i.e. the proportion of transcripts of interest that are successfully counted.
+* Research
+- Williams, C.G., Lee, H.J., Asatsuma, T. et al. An introduction to spatial transcriptomics for biomedical research. Genome Med 14, 68 (2022). https://doi.org/10.1186/s13073-022-01075-1
+- Marx, V. Method of the Year: spatially resolved transcriptomics. Nat Methods 18, 9–14 (2021). https://doi.org/10.1038/s41592-020-01033-y

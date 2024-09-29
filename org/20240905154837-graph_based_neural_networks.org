@@ -1,0 +1,103 @@
+:PROPERTIES:
+:ID:       f0d88e4b-41a0-4f14-9b91-50e3ee969b30
+:END:
+#+title: Graph based neural networks
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+* Notes
+** [[id:386622e7-74bb-4c28-954a-31e1036e8347][Graphs]]
+** Prediction
+There are three things we can predict based upon a graph
+- Node level predictions
+- Edge level predictions
+- Graph level predictions
+
+Each of these has unique features that we represent in a vector and then attempt to solve for.
+In general graph neural networks look like this
+*** Graph level
+In a graph level task our job is to predict the property of an entire graph. For example we might want to predict what a molecule represented by a graph smells like
+*** Node level
+This comes with attempting to predict the identity or role of each node within a graph i.e. node classification
+**** Node degree
+Amount of edges a node has. Treats all neighbouring nodes equally
+**** Node centrality
+Takes the importance of a node in a graph into account
+- Eigenvector centrality: a node v is important if its surrounded by important neighbouring nodes \(  \frac{1}{\lambda} * \sum_{u \in N(v)} c_u \)
+- Betweenness centrality: a node is important if it lies on may shortest paths between other nodes \( c_v = \sum_{s \ne v \ne t} \frac{\#(shortest\ path\ between\ s\ and\ t\ that\ contain\ v)}{\#(shortest\ path\ between\ s\ and\ t)}\)
+- Closeness centrality:  A node is important if it has small shortest path lengths to all other nodes
+**** Node clustering coefficient
+Measures how connected a node's neighbours are \( \frac{\#(edges\ among\ neighbouring\ nodes)}{\#(node\ pairs\ among\ k_v\ neighbouring\ nodes)}\)
+**** Node graph lets
+Rooted connected non-isomorphic (not similar) sub graphs
+*** Edge level
+This means predicting the relationship between nodes
+** Embedding
+The general model looks like Input -> structured features -> learning algorithm -> prediction. Embedding maps nodes into the embedding space. The idea is that the similarity of embedding between nodes indicates similarity in a network. This involves a couple of tasks:
+- An encoder maps from nodes to embedding
+  - Maps a node to a low dimensional vector
+- A function that defines node similarity
+  - Specifies how the relationship in vector space maps to relationships in the original network
+- A decoder that maps from embeddings to the similarity score
+* GNN
+A graph neural network is the network that transforms the embedding of nodes from the graph into the embedding space. Its essentially the same as seen in [[id:afe384cf-6a0d-4e7e-be26-aa4bcdd6fc7b][Neural Networks]], where we want to find a function f() with a variety of parameters that converts x -> y. To find it we calculate the gradient we'll need to change the parameters by to solve the function and then update them.
+** Learning rate
+The learning rate is a hyper parameter that controls the size of the gradient step and can vary over the course of training.
+** Stochastic Gradient Descent
+This is the technique where we use small batches (sub samples) of the data to do the forward pass and perform gradient descent.
+- Batch size: The number of data points in the mini batch
+- Iteration: One step of the SGD
+- Epoch: One full pass over the entire dataset
+*** Non-linearity
+If a function is linear that our additional weights don't actually add more complexity. To so we add non-linearity functions (like ReLU or the sigmoid)** Aggregate neighbours
+We want to generate node embedding based on local neural networks. We call this the *computation graph*. This means we want to find two functions, one that aggregates the messages from the other nodes and one that transforms the messages along the edges
+
+In deep models there can be many layers, where layer 0 is the node U and its input feature and layer k is the embedding that gets information from k hops away. A basic approach for information aggregation could be to average the neighbour messages and apply a neural network
+** Approaches
+What differs most graph neural network approaches is how they define the aggregation function and messages passing. In other words: what makes a graph layer. The other differentiation is how the graph layers are stacked in the neural network. The final area is whether we augment the features or structure of the graph
+** Message computation
+The message computation is transforming the information from the child node to a message vector. One example could be a linear layer, which multiplies the features by a weight matrix
+** Message aggregation
+Aggregate the messages from the nodes. Must be agnostic to the order of the nodes. Some examples could be the sum, mean or max. To ensure that we don't loose information from the node itself, we have the node send a message from itself (usually a different message computation will be performed)
+** Classical GNN Layers
+*** GCN
+GCN takes the idea from [[id:eab7f8ef-b1cb-4ca6-96d5-29399677904d][Convolutional Neural Networks]] and transfers it into the graph. A convolution network works by having a sliding kernel that takes information from its neighbours and puts it into one pixel. In this case we can think of the neighbouring pixels as instead neighbouring nodes and use message passing to propagate information across the graph.
+\begin{equation}
+h^{l}_{v}= \sigma (W^l  \sum_{u \in N(v)} \frac{h_u^{l-1}}{|N(v)|})
+\end{equation}
+where l is the layer, N is the neighbours and v is the node
+*** GraphSAGE
+GraphSAGE builds upon GCN. First it realises that the aggregation function is arbitrary and can be any function that doesn't require a specific node order. It also aggregates from the nodes itself
+- Message is computed within AGG()
+- State 1: Aggregate from neighbours
+  \begin{equation} h^l_{N(v)} \leftarrow AGG({h_i^{l-1},\forall u \in N(v)}) \end{equation}
+- Stage 2: Aggregate over the noes itself
+  \begin{equation} h^l_v \leftarrow \sigma (W^l . CONCAT(h_v^{l-1},h^l_{N(v)})) \end{equation}
+**** AGG
+AGG can take many forms
+- Mean: Take the weighted average
+- Pool: Take the average, max or min
+- LSTM
+**** L_2 normalisation (optional)
+Apply l_2 normalisation to h at every layer. Without this the embedding vectors may have different scales. In some cases this can improve performance
+*** Graph attention network (GAT)
+The idea is to apply an *attention weight* to the graphs. In graphSAGE and GCN we pay equal attention to all neighbours messages. However not all node neighbours are equally important. The idea is that the NN should devote more computing power on that small but important piece of data. What part of data is important depends on context and is learned through training.
+**** Mechanism
+- Compute attention coefficient e_{vu} across pairs of nodes v and u
+   \begin{equation}
+   e_{vu} = a(W^{(l)}h^{(l-1)}_u,W^{(l)}h^{(l-1)}_v)
+   \end{equation}
+   Where e_{vu} indicates the importance of u's message to node v
+- Normalise e_{vu} into the finall attention weight, for example using the softmax function
+- Take the weighted sum based on the final attention weight
+
+As a is arbitrary, we can choose any a. A common choice is using a linear layer.
+**** Multi head attention
+To stabilise the learning of GAT, we create multiple attention scores based on different sets of parameters and aggregate each of them. This will hopefully help learning.
+**** Benifits
+Allows for (implicitly) specifying different importance values to different neighbours.
+*** Batch normalisation
+Stabilise neural network training by taking a batch of inputs and re centring them into a zero mean and resealing variance into unit variance
+*** Dropout
+During training with some probability, randomly set neurons off during training. The idea is to make the network more resilient to bad data and help prevent over fitting.
+* Resources
+- Stanford Online (2021, April 14). /Stanford CS224W: Machine Learning with Graphs/ [Video]. Youtube. https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn

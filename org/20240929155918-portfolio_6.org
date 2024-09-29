@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       de6114d6-1006-4a87-94eb-a54cf681b3ff
+:END:
+#+title: Portfolio 6
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+The more I learn about machine learning the more shocked I am about how much of the fields innovations is based around a simple idea. For example, in (Yang et al, 2024), they first use a ResNet to extract the features from the slide windows. ResNet is a form of [[id:eab7f8ef-b1cb-4ca6-96d5-29399677904d][Convolutional Neural Network]]. Its name is short for RESidual NETwork and it relies on "skip" connections to help reduce he disappearing gradient problem. The concept is simple: when using a traditional neural network we're trying to go from A -> B. However in really deep networks, the gradient that we change the weights by can either vanish (approach zero) or explode (become unstably large). ResNet re frames the original question, by instead finding the residual of what we want i.e. if A is the answer and B is the input then A - B = x => A = B + x, find x. The network is then made up of multiple of these residual blocks, with skip connections which add the input to the residual. Intuitively this makes sense as it allows us to preserve our input data better throughout the network. It also helps with training as the block can easily output the identity of the previous block and not get punished by the loss function.
+
+I still need to re-establish communication with my supervisor and in general need to improve my communication and time management skills. I am getting more work done and have started to meet some of the goals I've set out but I'm still behind and need to catch up. Without input from my supervisor its hard so scope out the distance to the finish line.

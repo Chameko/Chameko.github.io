@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       9a71591c-18f4-4132-8a90-30bbe808578e
+:END:
+#+title: Portfolio 5
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+One of the things I mentioned in my self reflection is that I have problems with both open ended research and keeping to a plan due to my procrastination. Despite my best efforts I have let both get the better of me.
+
+I am way behind the plan I initially put down and have failed to make meaningful progress in my research. Reflecting back on the plan, I think that I needed to refine and discuss it more with my supervisor when I created it. While it provided a general overview its very easy to become discouraged when the goals listed as so large and that then leads to me procrastinating it. Instead I should have broken it down into smaller, more achievable chunks to keep better track of progress and encourage more productive work.
+
+My communication has also decreases as when reduced to e-mail it became too easy to forget/procrastinate which lead to a compounding problem where I haven't contacted my supervisor in a long time and am avoiding reaching out because I don't know how he'll react.
+
+However, as disappointed as I am in past me I can only change the future. I've stated in my self reflection that I'm adaptable and that is what I must do right now. I'm creating a new plan with more broken down, easier to achieve goals and have restarted work on the project. You always have more time than you think, it just requires you to make sacrifices. I also plan to re-establish communication with my supervisor because will need the assistance he can provide.

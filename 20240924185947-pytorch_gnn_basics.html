@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-29 Sun 23:34 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pytorch GNN basics</title>
+<meta name="author" content="chameko" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="imagine.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Pytorch GNN basics</h1>
+<div id="outline-container-org61f4ef7" class="outline-2">
+<h2 id="org61f4ef7">Installation and setup</h2>
+<div class="outline-text-2" id="text-org61f4ef7">
+<p>
+Assuming you are running in a unix environment with at least python 3.12 installed.
+</p>
+<ol class="org-ol">
+<li>Instantiate a virtual environment using <code>python3 -m venv pyg</code> and then activating it using <code>source pyg/bin/activate</code></li>
+<li>Installed pip and then installed pytorch geometric using</li>
+</ol>
+<div class="org-src-container">
+<pre class="src src-sh">pip install torch_geometric
+pip install pyg_lib torch_scatter torch_sparse torch_cluster torch_spline_conv -f https://data.pyg.org/whl/torch-2.4.0+cpu.html
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org37ce776" class="outline-2">
+<h2 id="org37ce776">Utility</h2>
+<div class="outline-text-2" id="text-org37ce776">
+<p>
+Used to get only the last few lines of the output
+</p>
+<div class="org-src-container">
+<pre class="src src-sh" id="orge061c24">tail -n 10 $data
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7e939b1" class="outline-2">
+<h2 id="org7e939b1">Code</h2>
+<div class="outline-text-2" id="text-org7e939b1">
+<div class="org-src-container">
+<pre class="src src-python" id="org6de2621">import torch
+from torch_geometric.datasets import Planetoid
+import torch.nn.functional as F
+from torch_geometric.nn import GCNConv
+
+# Load the Cora dataset
+dataset = Planetoid(root='data/Planetoid', name='Cora')
+
+
+class CustomGNN(torch.nn.Module):
+    def __init__(self, input_dim, hiddin_dim, output_dim):
+        super(CustomGNN, self).__init__()
+        self.layer1 = GCNConv(input_dim, hiddin_dim)
+        self.layer2 = GCNConv(hiddin_dim, output_dim)
+
+    def forward(self, feature_data, edge_info):
+        # First GCN layer
+        x = self.layer1(feature_data, edge_info)
+        x = F.relu(x)
+        x = F.dropout(x, p=0.5, training=self.training)
+
+        # Second GCN layer
+        x = self.layer2(x, edge_info)
+        return F.log_softmax(x, dim=1)
+
+
+# Initialise the GNN model
+input_features = dataset.num_node_features
+num_classes = dataset.num_classes
+model = CustomGNN(input_features, 16, num_classes)
+
+optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
+graph_data = dataset[0]
+
+
+def train_model():
+    model.train()
+    optimizer.zero_grad()
+    output = model(graph_data.x, graph_data.edge_index)
+    loss = F.nll_loss(output[graph_data.train_mask], graph_data.y[graph_data.train_mask])
+    loss.backward()
+    optimizer.step()
+    return loss.item()
+
+
+for epoch in range(200):
+    loss_value = train_model()
+    print(f"Epoch: {epoch+1:03d}, Loss: {loss_value:.4f}")
+
+
+def evaluate_model():
+    model.eval()
+    with torch.no_grad():
+        predictions = model(graph_data.x, graph_data.edge_index).argmax(dim=1)
+        correct = (predictions[graph_data.test_mask] == graph_data.y[graph_data.test_mask]).sum()
+        acc = int(correct) / int(graph_data.test_mask.sum())
+    return acc
+
+
+accuracy = evaluate_model()
+print(f'Test Accuracy: {accuracy:.4f}')
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: chameko</p>
+<p class="date">Created: 2024-09-29 Sun 23:34</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

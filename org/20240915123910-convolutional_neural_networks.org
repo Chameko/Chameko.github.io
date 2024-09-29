@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       eab7f8ef-b1cb-4ca6-96d5-29399677904d
+:END:
+#+title: Convolutional Neural Networks
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+* Basics
+A simple convolutional neural network has three types of layers
+** Convolution layers
+Neurons in the convolution layer are usually called filters. The idea of these layers is to extract features from an image. It does this by applying a 2D patch across the image and then using a *kernel* function, multiplying the inputs (in this case pixels) to one.
+*** Image processing
+This technique is commonly used in image processing, for example Gaussian blur is achieved by using a kernel in the shape of a bell curve and running it over the image
+*** Parameters
+**** Depth
+Depth describes the number of filters that we apply to the image. We can image this as a stack of 2d matrices
+**** Stride
+This is the number of pixels we slide the filter over the matrix by. With a stride of 1 we move one pixel at a time, with a stride of 2 we move 2 pixels at a time. Larger strides lead to smaller filter maps
+**** Padding
+Sometimes it's convenient to pad the input with zeroes around the border so we can apply the filter to the bordering elements. Adding zero padding would be a /wide convolution/ and not would be a /narrow convolution/
+** Pooling layers
+Images have a lot of pixels (crazy right?), so we ideally want to reduce the amount of data we have to process while maintaining the same features. That's what pooling layers are, they pool the results (also called down sampling or sub sampling). One example would be *max pooling*, where we  take the max value from a 2x2 window of pixels
+** Fully connected layers
+* Resources
+https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/
+- Futurology - An optimistic future (2020, December 19). /Convolutional Neural Networks Explained (CNN Visualized)/ [Vido]. Youtube. https://www.youtube.com/watch?v=pj9-rr1wDhM
+- Karn, U.(2016, August 11). /An intuitive Explanation of Convolutional Neural Networks/. https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/ 

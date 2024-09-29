@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-29 Sun 23:45 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Graph based neural networks</title>
+<meta name="author" content="chameko" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="imagine.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Graph based neural networks</h1>
+<div id="outline-container-org2bee55f" class="outline-2">
+<h2 id="org2bee55f">Notes</h2>
+<div class="outline-text-2" id="text-org2bee55f">
+</div>
+<div id="outline-container-org9bb6454" class="outline-3">
+<h3 id="org9bb6454"><a href="20240920154729-graphs.html#ID-386622e7-74bb-4c28-954a-31e1036e8347">Graphs</a></h3>
+</div>
+<div id="outline-container-orgeeaa047" class="outline-3">
+<h3 id="orgeeaa047">Prediction</h3>
+<div class="outline-text-3" id="text-orgeeaa047">
+<p>
+There are three things we can predict based upon a graph
+</p>
+<ul class="org-ul">
+<li>Node level predictions</li>
+<li>Edge level predictions</li>
+<li>Graph level predictions</li>
+</ul>
+
+<p>
+Each of these has unique features that we represent in a vector and then attempt to solve for.
+In general graph neural networks look like this
+</p>
+</div>
+<div id="outline-container-orgc4b27b8" class="outline-4">
+<h4 id="orgc4b27b8">Graph level</h4>
+<div class="outline-text-4" id="text-orgc4b27b8">
+<p>
+In a graph level task our job is to predict the property of an entire graph. For example we might want to predict what a molecule represented by a graph smells like
+</p>
+</div>
+</div>
+<div id="outline-container-org1e3c6f7" class="outline-4">
+<h4 id="org1e3c6f7">Node level</h4>
+<div class="outline-text-4" id="text-org1e3c6f7">
+<p>
+This comes with attempting to predict the identity or role of each node within a graph i.e. node classification
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org92a1e4d"></a>Node degree<br />
+<div class="outline-text-5" id="text-org92a1e4d">
+<p>
+Amount of edges a node has. Treats all neighbouring nodes equally
+</p>
+</div>
+</li>
+<li><a id="org1fe2c09"></a>Node centrality<br />
+<div class="outline-text-5" id="text-org1fe2c09">
+<p>
+Takes the importance of a node in a graph into account
+</p>
+<ul class="org-ul">
+<li>Eigenvector centrality: a node v is important if its surrounded by important neighbouring nodes \(  \frac{1}{\lambda} * \sum_{u \in N(v)} c_u \)</li>
+<li>Betweenness centrality: a node is important if it lies on may shortest paths between other nodes \( c_v = \sum_{s \ne v \ne t} \frac{\#(shortest\ path\ between\ s\ and\ t\ that\ contain\ v)}{\#(shortest\ path\ between\ s\ and\ t)}\)</li>
+<li>Closeness centrality:  A node is important if it has small shortest path lengths to all other nodes</li>
+</ul>
+</div>
+</li>
+<li><a id="org1d27824"></a>Node clustering coefficient<br />
+<div class="outline-text-5" id="text-org1d27824">
+<p>
+Measures how connected a node's neighbours are \( \frac{\#(edges\ among\ neighbouring\ nodes)}{\#(node\ pairs\ among\ k_v\ neighbouring\ nodes)}\)
+</p>
+</div>
+</li>
+<li><a id="org2cb9dbd"></a>Node graph lets<br />
+<div class="outline-text-5" id="text-org2cb9dbd">
+<p>
+Rooted connected non-isomorphic (not similar) sub graphs
+</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgf7154dc" class="outline-4">
+<h4 id="orgf7154dc">Edge level</h4>
+<div class="outline-text-4" id="text-orgf7154dc">
+<p>
+This means predicting the relationship between nodes
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org29caa0f" class="outline-3">
+<h3 id="org29caa0f">Embedding</h3>
+<div class="outline-text-3" id="text-org29caa0f">
+<p>
+The general model looks like Input -&gt; structured features -&gt; learning algorithm -&gt; prediction. Embedding maps nodes into the embedding space. The idea is that the similarity of embedding between nodes indicates similarity in a network. This involves a couple of tasks:
+</p>
+<ul class="org-ul">
+<li>An encoder maps from nodes to embedding
+<ul class="org-ul">
+<li>Maps a node to a low dimensional vector</li>
+</ul></li>
+<li>A function that defines node similarity
+<ul class="org-ul">
+<li>Specifies how the relationship in vector space maps to relationships in the original network</li>
+</ul></li>
+<li>A decoder that maps from embeddings to the similarity score</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org92d1944" class="outline-2">
+<h2 id="org92d1944">GNN</h2>
+<div class="outline-text-2" id="text-org92d1944">
+<p>
+A graph neural network is the network that transforms the embedding of nodes from the graph into the embedding space. Its essentially the same as seen in <a href="20240909171628-neural_networks.html#ID-afe384cf-6a0d-4e7e-be26-aa4bcdd6fc7b">Neural Networks</a>, where we want to find a function f() with a variety of parameters that converts x -&gt; y. To find it we calculate the gradient we'll need to change the parameters by to solve the function and then update them.
+</p>
+</div>
+<div id="outline-container-org6aefb6f" class="outline-3">
+<h3 id="org6aefb6f">Learning rate</h3>
+<div class="outline-text-3" id="text-org6aefb6f">
+<p>
+The learning rate is a hyper parameter that controls the size of the gradient step and can vary over the course of training.
+</p>
+</div>
+</div>
+<div id="outline-container-orgfaf4584" class="outline-3">
+<h3 id="orgfaf4584">Stochastic Gradient Descent</h3>
+<div class="outline-text-3" id="text-orgfaf4584">
+<p>
+This is the technique where we use small batches (sub samples) of the data to do the forward pass and perform gradient descent.
+</p>
+<ul class="org-ul">
+<li>Batch size: The number of data points in the mini batch</li>
+<li>Iteration: One step of the SGD</li>
+<li>Epoch: One full pass over the entire dataset</li>
+</ul>
+</div>
+<div id="outline-container-orgccea54d" class="outline-4">
+<h4 id="orgccea54d">Non-linearity</h4>
+<div class="outline-text-4" id="text-orgccea54d">
+<p>
+If a function is linear that our additional weights don't actually add more complexity. To so we add non-linearity functions (like ReLU or the sigmoid)** Aggregate neighbours
+We want to generate node embedding based on local neural networks. We call this the <b>computation graph</b>. This means we want to find two functions, one that aggregates the messages from the other nodes and one that transforms the messages along the edges
+</p>
+
+<p>
+In deep models there can be many layers, where layer 0 is the node U and its input feature and layer k is the embedding that gets information from k hops away. A basic approach for information aggregation could be to average the neighbour messages and apply a neural network
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdda0356" class="outline-3">
+<h3 id="orgdda0356">Approaches</h3>
+<div class="outline-text-3" id="text-orgdda0356">
+<p>
+What differs most graph neural network approaches is how they define the aggregation function and messages passing. In other words: what makes a graph layer. The other differentiation is how the graph layers are stacked in the neural network. The final area is whether we augment the features or structure of the graph
+</p>
+</div>
+</div>
+<div id="outline-container-org43c8a63" class="outline-3">
+<h3 id="org43c8a63">Message computation</h3>
+<div class="outline-text-3" id="text-org43c8a63">
+<p>
+The message computation is transforming the information from the child node to a message vector. One example could be a linear layer, which multiplies the features by a weight matrix
+</p>
+</div>
+</div>
+<div id="outline-container-org4afe648" class="outline-3">
+<h3 id="org4afe648">Message aggregation</h3>
+<div class="outline-text-3" id="text-org4afe648">
+<p>
+Aggregate the messages from the nodes. Must be agnostic to the order of the nodes. Some examples could be the sum, mean or max. To ensure that we don't loose information from the node itself, we have the node send a message from itself (usually a different message computation will be performed)
+</p>
+</div>
+</div>
+<div id="outline-container-org4ad04f5" class="outline-3">
+<h3 id="org4ad04f5">Classical GNN Layers</h3>
+<div class="outline-text-3" id="text-org4ad04f5">
+</div>
+<div id="outline-container-org7bab251" class="outline-4">
+<h4 id="org7bab251">GCN</h4>
+<div class="outline-text-4" id="text-org7bab251">
+<p>
+GCN takes the idea from <a href="20240915123910-convolutional_neural_networks.html#ID-eab7f8ef-b1cb-4ca6-96d5-29399677904d">Convolutional Neural Networks</a> and transfers it into the graph. A convolution network works by having a sliding kernel that takes information from its neighbours and puts it into one pixel. In this case we can think of the neighbouring pixels as instead neighbouring nodes and use message passing to propagate information across the graph.
+</p>
+\begin{equation}
+h^{l}_{v}= \sigma (W^l  \sum_{u \in N(v)} \frac{h_u^{l-1}}{|N(v)|})
+\end{equation}
+<p>
+where l is the layer, N is the neighbours and v is the node
+</p>
+</div>
+</div>
+<div id="outline-container-org2a95bba" class="outline-4">
+<h4 id="org2a95bba">GraphSAGE</h4>
+<div class="outline-text-4" id="text-org2a95bba">
+<p>
+GraphSAGE builds upon GCN. First it realises that the aggregation function is arbitrary and can be any function that doesn't require a specific node order. It also aggregates from the nodes itself
+</p>
+<ul class="org-ul">
+<li>Message is computed within AGG()</li>
+<li><p>
+State 1: Aggregate from neighbours
+</p>
+\begin{equation} h^l_{N(v)} \leftarrow AGG({h_i^{l-1},\forall u \in N(v)}) \end{equation}</li>
+<li><p>
+Stage 2: Aggregate over the noes itself
+</p>
+\begin{equation} h^l_v \leftarrow \sigma (W^l . CONCAT(h_v^{l-1},h^l_{N(v)})) \end{equation}</li>
+</ul>
+</div>
+<ul class="org-ul">
+<li><a id="org1ade004"></a>AGG<br />
+<div class="outline-text-5" id="text-org1ade004">
+<p>
+AGG can take many forms
+</p>
+<ul class="org-ul">
+<li>Mean: Take the weighted average</li>
+<li>Pool: Take the average, max or min</li>
+<li>LSTM</li>
+</ul>
+</div>
+</li>
+<li><a id="org7a3cf33"></a>L<sub>2</sub> normalisation (optional)<br />
+<div class="outline-text-5" id="text-org7a3cf33">
+<p>
+Apply l<sub>2</sub> normalisation to h at every layer. Without this the embedding vectors may have different scales. In some cases this can improve performance
+</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org6f72984" class="outline-4">
+<h4 id="org6f72984">Graph attention network (GAT)</h4>
+<div class="outline-text-4" id="text-org6f72984">
+<p>
+The idea is to apply an <b>attention weight</b> to the graphs. In graphSAGE and GCN we pay equal attention to all neighbours messages. However not all node neighbours are equally important. The idea is that the NN should devote more computing power on that small but important piece of data. What part of data is important depends on context and is learned through training.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org93c1228"></a>Mechanism<br />
+<div class="outline-text-5" id="text-org93c1228">
+<ul class="org-ul">
+<li><p>
+Compute attention coefficient e<sub>vu</sub> across pairs of nodes v and u
+</p>
+\begin{equation}
+e_{vu} = a(W^{(l)}h^{(l-1)}_u,W^{(l)}h^{(l-1)}_v)
+\end{equation}
+<p>
+Where e<sub>vu</sub> indicates the importance of u's message to node v
+</p></li>
+<li>Normalise e<sub>vu</sub> into the finall attention weight, for example using the softmax function</li>
+<li>Take the weighted sum based on the final attention weight</li>
+</ul>
+
+<p>
+As a is arbitrary, we can choose any a. A common choice is using a linear layer.
+</p>
+</div>
+</li>
+<li><a id="orgeca8a51"></a>Multi head attention<br />
+<div class="outline-text-5" id="text-orgeca8a51">
+<p>
+To stabilise the learning of GAT, we create multiple attention scores based on different sets of parameters and aggregate each of them. This will hopefully help learning.
+</p>
+</div>
+</li>
+<li><a id="org454732b"></a>Benifits<br />
+<div class="outline-text-5" id="text-org454732b">
+<p>
+Allows for (implicitly) specifying different importance values to different neighbours.
+</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgc8a70b2" class="outline-4">
+<h4 id="orgc8a70b2">Batch normalisation</h4>
+<div class="outline-text-4" id="text-orgc8a70b2">
+<p>
+Stabilise neural network training by taking a batch of inputs and re centring them into a zero mean and resealing variance into unit variance
+</p>
+</div>
+</div>
+<div id="outline-container-org284c9b1" class="outline-4">
+<h4 id="org284c9b1">Dropout</h4>
+<div class="outline-text-4" id="text-org284c9b1">
+<p>
+During training with some probability, randomly set neurons off during training. The idea is to make the network more resilient to bad data and help prevent over fitting.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc6b0a73" class="outline-2">
+<h2 id="orgc6b0a73">Resources</h2>
+<div class="outline-text-2" id="text-orgc6b0a73">
+<ul class="org-ul">
+<li>Stanford Online (2021, April 14). <i>Stanford CS224W: Machine Learning with Graphs</i> [Video]. Youtube. <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn">https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: chameko</p>
+<p class="date">Created: 2024-09-29 Sun 23:45</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

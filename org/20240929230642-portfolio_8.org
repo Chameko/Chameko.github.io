@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       58b85807-8fc7-4055-9065-2a514ef6f5db
+:END:
+#+title: Portfolio 8
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+Many problems throughout our world can be described in terms of items/objects and the relationships between them. This makes graph based neural networks an incredibly incising and exciting field. It took me a while to fully understand how graph based neural networks work, due to their inherit differences from standard deep neural networks. For this topic I found that attempting to learn it at face value with my previous knowledge from other types of neural networks wasn't that helpful. Instead it was more useful to start from the basics and work my way up. This is because graph neural networks have to operate so uniquely compared to the other networks to allow them to take advantage of the connections that graphs represent. This is primarily achieved through message passing and the various ways of accomplishing that. However what I've learned only applies to homogeneous graph networks, and for my task I want to represent the connections between two kinds of nodes, exemplars and normal windows. This means that I need to learn more about heterogeneous graphs. Currently I think that using GAT, or graph attention networks, would be the best starting point for my project because I want to assign different attention levels between exemplars and the other typical windows so network can learn which exemplars and windows hold more important information and propagate that through the network.
+
+While I am still behind in terms of what I wanted to achieve, I have confidence that I'll soon be able to develop and start testing a model.

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-29 Sun 23:32 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Convolutional Neural Networks</title>
+<meta name="author" content="chameko" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="imagine.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Convolutional Neural Networks</h1>
+<div id="outline-container-org8dea4a5" class="outline-2">
+<h2 id="org8dea4a5">Basics</h2>
+<div class="outline-text-2" id="text-org8dea4a5">
+<p>
+A simple convolutional neural network has three types of layers
+</p>
+</div>
+<div id="outline-container-org00e73a7" class="outline-3">
+<h3 id="org00e73a7">Convolution layers</h3>
+<div class="outline-text-3" id="text-org00e73a7">
+<p>
+Neurons in the convolution layer are usually called filters. The idea of these layers is to extract features from an image. It does this by applying a 2D patch across the image and then using a <b>kernel</b> function, multiplying the inputs (in this case pixels) to one.
+</p>
+</div>
+<div id="outline-container-orgb023f70" class="outline-4">
+<h4 id="orgb023f70">Image processing</h4>
+<div class="outline-text-4" id="text-orgb023f70">
+<p>
+This technique is commonly used in image processing, for example Gaussian blur is achieved by using a kernel in the shape of a bell curve and running it over the image
+</p>
+</div>
+</div>
+<div id="outline-container-orgdf917ec" class="outline-4">
+<h4 id="orgdf917ec">Parameters</h4>
+<div class="outline-text-4" id="text-orgdf917ec">
+</div>
+<ul class="org-ul">
+<li><a id="org001c07b"></a>Depth<br />
+<div class="outline-text-5" id="text-org001c07b">
+<p>
+Depth describes the number of filters that we apply to the image. We can image this as a stack of 2d matrices
+</p>
+</div>
+</li>
+<li><a id="orgae5ea16"></a>Stride<br />
+<div class="outline-text-5" id="text-orgae5ea16">
+<p>
+This is the number of pixels we slide the filter over the matrix by. With a stride of 1 we move one pixel at a time, with a stride of 2 we move 2 pixels at a time. Larger strides lead to smaller filter maps
+</p>
+</div>
+</li>
+<li><a id="org6ea5030"></a>Padding<br />
+<div class="outline-text-5" id="text-org6ea5030">
+<p>
+Sometimes it's convenient to pad the input with zeroes around the border so we can apply the filter to the bordering elements. Adding zero padding would be a <i>wide convolution</i> and not would be a <i>narrow convolution</i>
+</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgeb7d4ec" class="outline-3">
+<h3 id="orgeb7d4ec">Pooling layers</h3>
+<div class="outline-text-3" id="text-orgeb7d4ec">
+<p>
+Images have a lot of pixels (crazy right?), so we ideally want to reduce the amount of data we have to process while maintaining the same features. That's what pooling layers are, they pool the results (also called down sampling or sub sampling). One example would be <b>max pooling</b>, where we  take the max value from a 2x2 window of pixels
+</p>
+</div>
+</div>
+<div id="outline-container-org7b6d0ed" class="outline-3">
+<h3 id="org7b6d0ed">Fully connected layers</h3>
+</div>
+</div>
+<div id="outline-container-org34f2642" class="outline-2">
+<h2 id="org34f2642">Resources</h2>
+<div class="outline-text-2" id="text-org34f2642">
+<p>
+<a href="https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/">https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/</a>
+</p>
+<ul class="org-ul">
+<li>Futurology - An optimistic future (2020, December 19). <i>Convolutional Neural Networks Explained (CNN Visualized)</i> [Vido]. Youtube. <a href="https://www.youtube.com/watch?v=pj9-rr1wDhM">https://www.youtube.com/watch?v=pj9-rr1wDhM</a></li>
+<li>Karn, U.(2016, August 11). <i>An intuitive Explanation of Convolutional Neural Networks</i>. <a href="https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/">https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: chameko</p>
+<p class="date">Created: 2024-09-29 Sun 23:32</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

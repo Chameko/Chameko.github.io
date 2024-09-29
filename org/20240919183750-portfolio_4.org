@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       29684092-569b-4da7-b679-c27b28f88436
+:END:
+#+title: Portfolio 4
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+Machine learning is fascinating in how much of it attempts to reflect natures and our reality. The very basics concepts of a deep learning network are the same as those found in our brains. We have a bunch of "neurons" connected together via pathways and together they are able to perform pattern recognition and reasoning. I was surprised by the elegant simplicity of the concept. Machine learning has always been this magic that simply makes the models like Chat-GPT perform seemingly impossible feats but now I feel as though the curtain has been lifted a tad.
+
+It amazes me how some of our most effective designs and ideas come from nature. When reading [[http://neuralnetworksanddeeplearning.com/index.html]], the author talked about how when making a model, rather than just have lots of neurons and layers, its better to try and create a model that will "reason" the same way a person would. In the case of the handwriting example, each layer breaks down the number into smaller components and then uses that to identify them. If I ever want to do further research into AI, I'll keep this advice in mind when developing future models and for ways to improve my current one.
+
+One of the tasks I want to accomplish is to create a simple machine learning model, such as the handwriting identifier mentioned previously, to gain a better understanding of both how to implement AI using frameworks such as pytorch (the library my supervisor recommended) and because I learn better when I put ideas into practise as to pure academic research.
+
+Due to technology reasons, I can't video chat with my supervisor using my laptop and am providing weekly emails instead. While e-mail is an adequate form of communication I find face-to-face conversations allow me to better ask follow up questions and improves communication.

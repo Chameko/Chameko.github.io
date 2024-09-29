@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       6b2587cd-ca62-4ab6-b408-200f7ab058b3
+:END:
+#+title: Portfolio 3
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+While my research speed has improved the effectiveness has not. My typically research pipeline looks like this
+1. Start research on something
+2. Get stuck
+3. Find good resource that leads to other good resources
+4. Gain good understanding of subject
+5. Forget :(
+6. Use list of collected links to do research again when I need to write something using said research
+7. profit ???
+
+Obviously not ideal. This can primarily be attributed to my poor note taking. One of the reasons I find note taking so hard is because I get immersed in my research, going from resource to resource without really writing everything down. Given I also have to maintain a portfolio of my work, its an area that requires investment. Right now I'm exploring using the Zettelkasten Method because it allows me to take notes with less structure which better fits how I think and allows me to quickly add concepts when researching, which will hopefully increase my engagement with the task. It also fits well with emacs (org-roam) which is the tool I use for my organisation and other text-based stuff.
+
+Through my research I found an interesting article/paper [https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8000474/] that talks about the idea of using gene expression signatures for prognosis. This helped better define my motivation as spatial transcriptomics is a tool for finding gene expression. It also provides a potential place to extend my model to, adding an extra block that uses the gene expression results to predict a cancer prognosis. 

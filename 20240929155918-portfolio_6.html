@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-29 Sun 23:33 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portfolio 6</title>
+<meta name="author" content="chameko" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="imagine.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Portfolio 6</h1>
+<p>
+The more I learn about machine learning the more shocked I am about how much of the fields innovations is based around a simple idea. For example, in (Yang et al, 2024), they first use a ResNet to extract the features from the slide windows. ResNet is a form of <a href="20240915123910-convolutional_neural_networks.html#ID-eab7f8ef-b1cb-4ca6-96d5-29399677904d">Convolutional Neural Network</a>. Its name is short for RESidual NETwork and it relies on "skip" connections to help reduce he disappearing gradient problem. The concept is simple: when using a traditional neural network we're trying to go from A -&gt; B. However in really deep networks, the gradient that we change the weights by can either vanish (approach zero) or explode (become unstably large). ResNet re frames the original question, by instead finding the residual of what we want i.e. if A is the answer and B is the input then A - B = x =&gt; A = B + x, find x. The network is then made up of multiple of these residual blocks, with skip connections which add the input to the residual. Intuitively this makes sense as it allows us to preserve our input data better throughout the network. It also helps with training as the block can easily output the identity of the previous block and not get punished by the loss function.
+</p>
+
+<p>
+I still need to re-establish communication with my supervisor and in general need to improve my communication and time management skills. I am getting more work done and have started to meet some of the goals I've set out but I'm still behind and need to catch up. Without input from my supervisor its hard so scope out the distance to the finish line.
+</p>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: chameko</p>
+<p class="date">Created: 2024-09-29 Sun 23:33</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       3951d33b-d761-4407-b74e-0a129513bdec
+:END:
+#+title: Portfolio 7
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+One of the problems I didn't expect to encounter while working on this project was programming. I am confident in my knowledge of computers and general programming languages as picked up python relatively easily due to its easy to approach nature. However one of the difficulties I encountered was setting up a working python environment, especially for machine learning. The primary libraries I'm interested in are PyTorch, which is an library for AI development and PyTorch Geometric, which is specifically for graph based neural networks. I have two computers of which I set up the environments. One is my low power linux laptop, and the other is my desktop that has a powerful GPU which I plan to use to test and train the model. To setup on my laptop I had to learn about python's virtual environments as the global environment was managed by my laptops package manager. For my desktop I learned that in machine learning, NVIDIA is the provider of choice for GPU based acceleration using the cuda platform, which places my AMD 6800XT at a disadvantage in terms of training support and stability. Given I will likely want to rapidly iterate I am starting to look at options that will give me access to more compute power.
+
+I ran a simple test neural network to verify the environment, the code of which can be found at [[id:f7d3615d-a80d-4e25-9eb4-d8939a7eb197][Pytorch GNN basics]].
